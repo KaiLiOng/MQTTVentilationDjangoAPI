@@ -1,0 +1,64 @@
+<!-- 
+  
+Title: History Page
+Version: v1
+Date: 09.09.2021
+
+Short Description:
+History page for retrieve data.
+The plan is the the history function will retrive data from database.
+
+Output Data:
+A history table will appear in a new page. 
+
+Input Data:
+
+
+Devices to connect:
+
+Changelog:
+09.09.2021 First Draft
+-->
+<!--always extend Page with main header and block content !-->
+
+{% extends "main/header.html" %}
+
+{%block content %}
+<div class="container">
+    <div class="row">
+    {% for sensor in object.sensor.all %}
+        {% for chart_type in sensor.chart_type.all %}
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
+            <div class="card m-2" >
+                <h5 class="card-header">{{sensor}}</h5>
+                <div class="card-body">
+                    <div id="{{sensor}}_{{chart_type}}">
+
+                        {% if 'line' in chart_type|stringformat:'s' %}    
+                        <script>
+                            print_Line_Diagram("{{chart_type}}","{{object.id}}","{{sensor}}");   
+                        </script>
+                        {% elif  'pie' in chart_type|stringformat:'s' %}
+                        <script>
+                            print_pie_chart("{{chart_type}}", "{{object.id}}","{{sensor}}", "{{sensor}}");   
+                        </script>
+                        {% elif 'text' in chart_type|stringformat:'s' %}
+                        <script>
+                            print_digital("{{chart_type}}", "{{object.id}}","{{sensor}}", "{{sensor}}");   
+                        </script>
+                        {% elif 'bar' in chart_type|stringformat:'s' %}
+                        <script>
+                            print_bar_chart("{{chart_type}}", "{{object.id}}","{{sensor}}", "{{sensor.xAxisTitle}}", "{{sensor}}",  "{{sensor.compareValue}}");   
+                        </script>
+                        {% endif %}
+                  </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% endfor %}
+
+</div>  
+</div>
+
+{% endblock %}

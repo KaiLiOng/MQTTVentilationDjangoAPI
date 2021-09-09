@@ -1,0 +1,38 @@
+<!-- 
+  
+Title: login page
+Version: v1
+Date: 14.12.2020
+
+Short Description:
+Login for doctor or super user
+
+Output Data:
+No output data 
+
+Input Data:
+Username and password
+
+Devices to connect:
+
+Changelog:
+14.12.2020 First Test Implementation
+-->
+<!--always extend Page with main header and block content !-->
+
+{% extends "main/header.html" %}
+{%block content %}
+<div class="container">
+<div class="card text-center">
+  <div class="card-header">Login </div>
+  <div class="card-body">
+  <form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button class="btn btn-primary" style="background-color: lightgray; color: black" type="submit">Login</button>
+  </form>
+    If you already have an account, <a href="/register"><strong>Register</strong></a> instead
+  </div>
+</div>
+</div> 
+{% endblock %}

@@ -1,0 +1,70 @@
+<!-- 
+  
+Title: main ventilation page
+Version: v1
+Date: 14.12.2020
+
+Short Description:
+Shows overview of current patients as main page
+
+Output Data:
+Patients data with link to seperate patient side
+
+Devices to connect:
+
+Changelog:
+14.12.2020 First Test Implementation
+17.12.2020 Test Graphs
+06.01.2020 Added overview of patients with authentication of user
+-->
+<!--always extend Page with main header and block content !-->
+{% extends "main/header.html" %}
+{%block content %}
+{% if user.is_authenticated%}
+{% if object_list %}
+  {% for patient in object_list %}
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card mt-4" >
+        <div class="card-body">
+          <h5 class="card-title">{{patient.firstName}} {{patient.lastName}}</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Age: {{patient.age}}</li>
+            <li class="list-group-item">Doctor: {{patient.doctor}}</li>
+            <a href="{% url 'main:patient-detail' patient.pk %}" class="btn btn-primary">Show Ventilationdata</a>
+          </ul>
+          </div>
+      </div>
+    </div>
+  </div>  
+  {% endfor %}
+{% else %}
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card mt-4" >
+      <div class="card-body">
+        <h5 class="card-title">No patient at the moment</h5>
+        <ul class="list-group list-group-flush">
+          <a href="admin/api/patient/add/" class="btn btn-primary">Create new patient</a>
+        </ul>
+        </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% else %}
+  <div class="card text-center">
+    <div class="card-header">
+      Error
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">No permissions</h5>
+      <p class="card-text">First login or create a new account</p>
+      <a href="/login" class="btn btn-primary">Login</a>
+      <a href="/register" class="btn btn-primary">Register</a>
+    </div>
+  </div>
+{% endif %}  
+{% endblock %}
+
+

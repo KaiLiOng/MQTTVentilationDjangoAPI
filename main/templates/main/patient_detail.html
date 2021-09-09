@@ -1,0 +1,80 @@
+<!-- 
+  
+Title: main ventilation page
+Version: v1
+Date: 14.12.2020
+
+Short Description:
+Show the sensor values of the patient, live plotting of sensor values (timebased) 
+
+Output Data:
+Patients data with link to seperate patient side
+
+Devices to connect:
+
+Changelog:
+14.12.2020 First Test Implementation
+17.12.2020 Test Graphs
+06.01.2020 Added foreach patient the number of sensor which belongs to him
+-->
+
+{% extends "main/header.html" %}
+
+{%block content %}
+<div class="container">
+    <div class="row">
+    {% for sensor in object.sensor.all %}
+        {% for chart_type in sensor.chart_type.all %}
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
+            <div class="card m-2" >
+                <h5 class="card-header">{{sensor}}</h5>
+                <div class="card-body">
+                    <div id="{{sensor}}_{{chart_type}}">
+
+                        {% if 'line' in chart_type|stringformat:'s' %}    
+                        <script>
+                            print_Line_Diagram("{{chart_type}}","{{object.id}}","{{sensor}}");   
+                        </script>
+                        {% elif  'pie' in chart_type|stringformat:'s' %}
+                        <script>
+                            print_pie_chart("{{chart_type}}", "{{object.id}}","{{sensor}}", "{{sensor}}");   
+                        </script>
+                        {% elif 'text' in chart_type|stringformat:'s' %}
+                        <script>
+                            print_digital("{{chart_type}}", "{{object.id}}","{{sensor}}", "{{sensor}}");   
+                        </script>
+                        {% elif 'bar' in chart_type|stringformat:'s' %}
+                        <script>
+                            print_bar_chart("{{chart_type}}", "{{object.id}}","{{sensor}}", "{{sensor.xAxisTitle}}", "{{sensor}}",  "{{sensor.compareValue}}");   
+                        </script>
+                        {% endif %}
+                  </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="col-sm">
+        <div class="card">
+            <div class="card-header">
+                SINE WAVE
+            </div>
+            <div class="card-body">
+                <canvas class="my-4 h-25" id="myChart"></canvas>
+            </div>
+        </div>
+        {% comment %} <div class="card">
+            <div class="card-header">
+                SINE WAVE (Plotly)
+            </div>
+            <div class="card-body">
+                <canvas class="my-4 h-25" id="graph"></canvas>
+            </div>
+        </div> {% endcomment %}
+    </div>
+
+    <div id="chartContainer2" style="height: 100%; width: 100%;"></div>
+</div>  
+{% endblock %}
+

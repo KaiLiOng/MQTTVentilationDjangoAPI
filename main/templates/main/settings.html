@@ -1,0 +1,115 @@
+<!-- 
+  
+Title: Settings Page
+Version: v1
+Date: 14.12.2020
+
+Short Description:
+Settings page for communictaion ESP, at the moment the settings have no effect to 
+the esp32 communications
+
+Output Data:
+No output data 
+
+Input Data:
+
+
+Devices to connect:
+
+Changelog:
+14.12.2020 First Test Implementation
+06.01.2020 Added a better look for the whole page
+08.01.2020 Added a slider
+-->
+<!--always extend Page with main header and block content !-->
+
+{% extends "main/header.html" %}
+
+{%block content %}
+
+<div class="container">
+<div class="row">
+    <div class="col-sm-12 col-xs-12">
+        <div class="card mt-4">
+            <div class="card-header">
+              Sensor Settings
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Refresh Rate</h5>
+              <p class="card-text">Descripting of the setting</p>
+              <label class="form-label">Rate: <span id="rateValue"></span> ms</label>
+              <input type="range" class="form-range" min="50" max="1000" step="50" id="rangeRate">       
+            </div>  
+          </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-xs-12">
+        <div class="card mt-4">
+            <div class="card-header">
+              Sensor Settings
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Ventilation Mode</h5>
+              <p class="card-text">Descripting of the setting</p>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Change Mode</label>
+              </div>
+            </div>
+          </div>
+    </div>
+  </div>  
+  <div class="row">
+    <div class="col-sm-12 col-xs-12">
+        <div class="card mt-4">
+            <div class="card-header">
+              Patient Settings
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Refresh Rate</h5>
+              <p class="card-text">Descripting of the setting</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+    </div>
+  </div>  
+  <div class="row">
+    <div class="col-sm-12 col-xs-12">
+        <div class="card mt-4">
+            <div class="card-header">
+              Patient Settings
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Refresh Rate</h5>
+              <p class="card-text">Descripting of the setting</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+    </div>
+  </div>
+  <div class="card mt-4">
+    <div class="card-header">
+        Save Settings
+      </div>
+    <div class="card-body">
+        <input class="btn btn-primary" type="submit" value="Save">
+        <input class="btn btn-primary" type="reset" value="Reset">
+    </div>
+  </div>
+</div> 
+
+<script>
+    var slider = document.getElementById("rangeRate");
+    var output = document.getElementById("rateValue");
+    output.innerHTML = slider.value;
+    
+    slider.oninput = function() {
+      output.innerHTML = this.value;
+    }
+</script> 
+
+
+{% endblock %}
+
+

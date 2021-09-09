@@ -1,0 +1,46 @@
+<!-- 
+  
+Title: login page
+Version: v1
+Date: 14.12.2020
+
+Short Description:
+Page for showing search results
+
+Output Data:
+All patients which contains the given string
+
+Input Data:
+
+Devices to connect:
+
+Changelog:
+14.12.2020 First Test Implementation
+06.01.2020 Added a better look for the whole page
+-->
+<!--always extend Page with main header and block content !-->
+
+
+{% extends "main/header.html" %}
+{%block content %}
+    <div class="container">
+        {% for result in object_list %}
+        <div class="row">
+            <div class="col-sm-12">
+              <div class="card mt-4" >
+                <div class="card-body">
+                  <h5 class="card-title">{{result.firstName}}</h5>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Age: {{result.age}}</li>
+                    <li class="list-group-item">Doctor: {{result.doctor}}</li>
+                    <a href="{% url 'main:patient-detail' result.pk %}" class="btn btn-primary">Show Ventilationdata</a>
+                  </ul>
+                  </div>
+              </div>
+            </div>
+          </div>  
+        {% empty %}
+            Sorry, no subjects found.
+        {% endfor %}
+    </div>
+{% endblock %}
